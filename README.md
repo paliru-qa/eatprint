@@ -1,75 +1,61 @@
-# React + TypeScript + Vite
+# Eatprint
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Eatprint is a small personal food diary web app focused on observation, habits, and gentle nutrition-related insights rather than strict calorie tracking.
 
-Currently, two official plugins are available:
+## Live Demo
+https://eatprint.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Product Idea
+Eatprint is designed to help users observe their relationship with food over time.
 
-## React Compiler
+Instead of behaving like a strict calorie tracker, the product is intended to support questions such as:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- What have I been eating lately?
+- Am I eating proper meals or mostly snacking?
+- What foods do I keep craving?
+- Do I tend to want sweets at certain times?
+- Are my eating habits changing from week to week?
 
-## Expanding the ESLint configuration
+Calories and macros may exist as supporting information, but they are not the main point of the experience.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Current Status
+This repository currently contains the initial project setup and first deployed version of the app.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The broader MVP direction is:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- lightweight personal food diary
+- simple onboarding
+- likely no authentication in Phase 1
+- focus on food logging first
+- cloud persistence and diary identity under consideration
+- AI features are optional and not part of the core MVP foundation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Goals for the MVP
+- Make food logging easy and low-friction
+- Keep the product lightweight and inexpensive to run
+- Prioritize diary usability over advanced analytics
+- Preserve room for future observation and insight features
 
-```
+## Tech Stack
+- React
+- TypeScript
+- Vite
+- Vercel
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Planned Documentation
+This project is also being used as a QA-oriented portfolio piece.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Planned supporting documentation includes:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- product requirements
+- MVP scope and acceptance criteria
+- test plan
+- test checklist
+- risk and edge-case analysis
 
-```
+## Development
+
+Install dependencies:
+
+```bash
+npm install
