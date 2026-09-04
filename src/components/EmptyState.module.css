@@ -1,0 +1,16 @@
+.wrap {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  color: var(--color-ink-soft);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+
+.description {
+  font-size: var(--step-body);
+}

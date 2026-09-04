@@ -1,0 +1,15 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: var(--max-content-width);
+  padding: 0 var(--space-4);
+}
+
+.main {
+  padding-top: var(--space-4);
+}

@@ -19,7 +19,15 @@ Instead of behaving like a strict calorie tracker, the product is intended to su
 Calories and macros may exist as supporting information, but they are not the main point of the experience.
 
 ## Current Status
-This repository currently contains the initial project setup and first deployed version of the app.
+This pass turns the app into a real Eatprint MVP shell: Today view with
+meal-type sections and logged times, Week view with day navigation and a
+patterns summary, and clearly marked placeholders for nutrition details and
+AI observations (both intentionally postponed).
+
+State is in-memory only for now (resets on refresh) — no persistence yet,
+even local. This was a deliberate scope choice for this pass: prioritize
+product shape and UI clarity before adding data durability, a nutrition
+engine, or AI. See `src/components/` for the screen structure.
 
 The broader MVP direction is:
 

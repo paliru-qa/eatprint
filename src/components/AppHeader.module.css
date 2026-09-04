@@ -1,0 +1,13 @@
+.header {
+  padding: var(--space-5) 0 var(--space-3);
+}
+
+.wordmark {
+  font-size: var(--step-h2);
+}
+
+.tagline {
+  color: var(--color-ink-soft);
+  font-size: var(--step-caption);
+  margin-top: 2px;
+}
