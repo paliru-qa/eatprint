@@ -24,41 +24,65 @@
   font-size: var(--step-h3);
 }
 
-.breakdown {
+.table {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-}
-
-.label {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: var(--step-caption);
-  color: var(--color-ink-soft);
-  font-weight: 600;
+  gap: var(--space-3);
 }
 
 .dayRow {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: stretch;
+  text-align: left;
   background: var(--color-paper-raised);
   border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
-  text-align: left;
 }
 
 .dayDate {
   font-size: var(--step-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--color-ink-soft);
-}
-
-.dayCount {
-  font-size: var(--step-caption);
+  font-weight: 600;
 }
 
 .dayEmpty {
   font-size: var(--step-caption);
   color: var(--color-ink-soft);
+  font-style: italic;
+}
+
+.dayEntries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dayEntry {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.entryTime {
+  flex: 0 0 auto;
+  font-size: var(--step-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+  min-width: 3.5em;
+}
+
+.entryText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

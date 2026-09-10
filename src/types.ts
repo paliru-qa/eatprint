@@ -1,19 +1,29 @@
-// Minimal types for this product-shape pass. Deliberately no nutrition
-// fields, no context/mood fields, no ids beyond what's needed to render a
-// list — those all belong to the next pass once real data/AI logic lands.
+// Time-based eating journal entries. Deliberately no meal-type/category as
+// a structural field this pass — an entry is just "when" + "what", plus a
+// small optional set of lightweight context tags. Categories may return
+// later as optional metadata if useful, but they are not the main shape.
 
-export type MealType = "breakfast" | "lunch" | "dinner" | "snack";
+/** A small, fixed, optional set of lightweight context tags per entry. */
+export const ENTRY_TAGS = [
+  "very hungry",
+  "small portion",
+  "overate",
+  "wanted something sweet",
+  "wanted something salty",
+  "satisfied",
+] as const;
 
-export const MEAL_TYPES: MealType[] = ["breakfast", "lunch", "dinner", "snack"];
+export type EntryTag = (typeof ENTRY_TAGS)[number];
 
-export interface Meal {
+export interface Entry {
   id: string;
-  type: MealType;
-  /** Free-text description as typed by the user. */
+  /** Free-text description as typed by the user, in any language. */
   text: string;
-  /** ISO timestamp of when the meal was logged. */
+  /** ISO timestamp — the actual moment this was eaten. First-class and editable. */
   time: string;
+  /** Optional, lightweight — at most a few tags, never required. */
+  tags?: EntryTag[];
 }
 
-/** All meals for a single day, keyed by ISO date ("YYYY-MM-DD"). */
-export type MealsByDate = Record<string, Meal[]>;
+/** All entries for a single day, keyed by ISO date ("YYYY-MM-DD"). */
+export type EntriesByDate = Record<string, Entry[]>;

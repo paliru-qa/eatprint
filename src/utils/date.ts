@@ -55,3 +55,22 @@ export function formatShortDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d).toLocaleDateString(undefined, { weekday: "short", day: "numeric" });
 }
+
+/** Extracts "HH:mm" from an ISO timestamp, for binding to <input type="time">. */
+export function toTimeInputValue(isoTimestamp: string): string {
+  const date = new Date(isoTimestamp);
+  if (Number.isNaN(date.getTime())) return "";
+  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
+
+/** Combines an ISO date ("YYYY-MM-DD") and a time input value ("HH:mm") into a full ISO timestamp. */
+export function combineDateAndTime(dateIso: string, timeValue: string): string {
+  const [y, m, d] = dateIso.split("-").map(Number);
+  const [h, min] = (timeValue || "12:00").split(":").map(Number);
+  return new Date(y, m - 1, d, h, min).toISOString();
+}
+
+export function currentTimeInputValue(): string {
+  const now = new Date();
+  return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+}

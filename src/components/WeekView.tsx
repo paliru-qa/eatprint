@@ -1,20 +1,19 @@
 import { useState } from "react";
-import type { MealsByDate } from "../types";
-import { addDays, formatShortDate, formatWeekRange, startOfWeek, todayIso, weekDates } from "../utils/date";
+import type { EntriesByDate } from "../types";
+import { addDays, formatShortDate, formatTime, formatWeekRange, startOfWeek, todayIso, weekDates } from "../utils/date";
 import { EmptyState } from "./EmptyState";
-import { WeekPatternsPlaceholder } from "./WeekPatternsPlaceholder";
 import styles from "./WeekView.module.css";
 
 export function WeekView({
-  mealsByDate,
+  entriesByDate,
   onOpenDay,
 }: {
-  mealsByDate: MealsByDate;
+  entriesByDate: EntriesByDate;
   onOpenDay: (date: string) => void;
 }) {
   const [weekStart, setWeekStart] = useState(() => startOfWeek(todayIso()));
   const dates = weekDates(weekStart);
-  const anyRecorded = dates.some((d) => (mealsByDate[d] ?? []).length > 0);
+  const anyRecorded = dates.some((d) => (entriesByDate[d] ?? []).length > 0);
 
   return (
     <div className={styles.page}>
@@ -30,27 +29,33 @@ export function WeekView({
 
       {!anyRecorded ? (
         <EmptyState
-          title="No meals recorded this week yet"
-          description="Once you log a few meals, you'll see this week's shape here."
+          title="No entries recorded this week yet"
+          description="Once you log a few entries, you'll see what and when you ate across the week here."
         />
       ) : (
-        <WeekPatternsPlaceholder dates={dates} mealsByDate={mealsByDate} />
+        <div className={styles.table}>
+          {dates.map((date) => {
+            const entries = [...(entriesByDate[date] ?? [])].sort((a, b) => a.time.localeCompare(b.time));
+            return (
+              <button key={date} type="button" className={styles.dayRow} onClick={() => onOpenDay(date)}>
+                <span className={styles.dayDate}>{formatShortDate(date)}</span>
+                {entries.length === 0 ? (
+                  <span className={styles.dayEmpty}>No entries</span>
+                ) : (
+                  <ul className={styles.dayEntries}>
+                    {entries.map((entry) => (
+                      <li key={entry.id} className={styles.dayEntry}>
+                        <span className={styles.entryTime}>{formatTime(entry.time)}</span>
+                        <span className={styles.entryText}>{entry.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </button>
+            );
+          })}
+        </div>
       )}
-
-      <div className={styles.breakdown}>
-        <span className={styles.label}>Days</span>
-        {dates.map((date) => {
-          const count = (mealsByDate[date] ?? []).length;
-          return (
-            <button key={date} className={styles.dayRow} onClick={() => onOpenDay(date)}>
-              <span className={styles.dayDate}>{formatShortDate(date)}</span>
-              <span className={count > 0 ? styles.dayCount : styles.dayEmpty}>
-                {count > 0 ? `${count} meal${count === 1 ? "" : "s"}` : "No meals"}
-              </span>
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }

@@ -19,15 +19,18 @@ Instead of behaving like a strict calorie tracker, the product is intended to su
 Calories and macros may exist as supporting information, but they are not the main point of the experience.
 
 ## Current Status
-This pass turns the app into a real Eatprint MVP shell: Today view with
-meal-type sections and logged times, Week view with day navigation and a
-patterns summary, and clearly marked placeholders for nutrition details and
-AI observations (both intentionally postponed).
+This pass reworked the diary around **time**, not fixed meal categories.
+Each entry is "when + what" (plus optional lightweight feeling tags), shown
+as a chronological list — not breakfast/lunch/dinner/snack sections. Time
+is editable via a simple time picker on every entry. Entries can now be
+edited and deleted. The week view shows a day-by-day timeline of what and
+when was eaten, instead of meal-type counters, so timing rhythm across days
+is visible directly.
 
-State is in-memory only for now (resets on refresh) — no persistence yet,
-even local. This was a deliberate scope choice for this pass: prioritize
-product shape and UI clarity before adding data durability, a nutrition
-engine, or AI. See `src/components/` for the screen structure.
+State is still in-memory only (resets on refresh) — persistence, body
+measurements, drink tracking, real AI parsing, and richer context are all
+deliberately postponed to later passes. See `src/components/` for the
+screen structure.
 
 The broader MVP direction is:
 
