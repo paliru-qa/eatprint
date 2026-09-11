@@ -2,6 +2,13 @@
   padding: var(--space-5) 0 var(--space-3);
 }
 
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
 .wordmark {
   font-size: var(--step-h2);
 }
@@ -10,4 +17,14 @@
   color: var(--color-ink-soft);
   font-size: var(--step-caption);
   margin-top: 2px;
+}
+
+.copyLinkButton {
+  background: none;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: var(--step-caption);
+  color: var(--color-ink-soft);
+  white-space: nowrap;
 }

@@ -1,0 +1,39 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.text {
+  font-size: var(--step-caption);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.primaryButton {
+  background: var(--color-accent);
+  color: var(--color-paper-raised);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: var(--step-caption);
+}
+
+.ghostButton {
+  background: none;
+  border: 1px solid var(--color-hairline);
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--color-ink-soft);
+  font-size: var(--step-caption);
+}

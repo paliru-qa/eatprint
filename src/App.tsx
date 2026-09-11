@@ -1,33 +1,23 @@
 import { useState } from "react";
 import { AppHeader } from "./components/AppHeader";
+import { DiaryLinkBanner } from "./components/DiaryLinkBanner";
 import { Nav } from "./components/Nav";
 import type { Tab } from "./components/Nav";
 import { TodayView } from "./components/TodayView";
 import type { EntryFormValues } from "./components/EntryForm";
 import { WeekView } from "./components/WeekView";
-import type { EntriesByDate } from "./types";
+import { useDiaryStorage } from "./hooks/useDiaryStorage";
+import { ensureDiaryId } from "./utils/diaryId";
 import { combineDateAndTime, todayIso } from "./utils/date";
 import styles from "./App.module.css";
 
-function seedData(): EntriesByDate {
-  const today = todayIso();
-  const now = new Date();
-  const hoursAgo = (h: number) => new Date(now.getTime() - h * 60 * 60 * 1000).toISOString();
-  return {
-    [today]: [
-      { id: "seed-1", text: "2 eggs, toast with cheese, tomato, coffee", time: hoursAgo(4) },
-      { id: "seed-2", text: "A few squares of chocolate", time: hoursAgo(1), tags: ["wanted something sweet"] },
-    ],
-  };
-}
-
 export default function App() {
+  const [{ id, isNew }] = useState(() => ensureDiaryId());
   const [tab, setTab] = useState<Tab>("today");
   const [date, setDate] = useState(todayIso());
-  // In-memory only for this pass — resets on refresh. Persistence, body
-  // measurements, drink tracking, and real AI parsing are all deliberately
-  // postponed to later passes; this pass is about the time-based diary shape.
-  const [entriesByDate, setEntriesByDate] = useState<EntriesByDate>(seedData);
+  const [showLinkBanner, setShowLinkBanner] = useState(isNew);
+
+  const { entriesByDate, setEntriesByDate, loading, syncError } = useDiaryStorage(id);
 
   function handleAddEntry(targetDate: string, values: EntryFormValues) {
     setEntriesByDate((prev) => {
@@ -70,9 +60,13 @@ export default function App() {
     <div className={styles.shell}>
       <div className={styles.content}>
         <AppHeader />
+        {showLinkBanner && <DiaryLinkBanner onDismiss={() => setShowLinkBanner(false)} />}
+        {syncError && <p className={styles.syncNote}>Couldn't sync just now — your entries are still saved on this device.</p>}
         <Nav active={tab} onChange={setTab} />
         <main className={styles.main}>
-          {tab === "today" ? (
+          {loading ? (
+            <p className={styles.loading}>Loading your diary…</p>
+          ) : tab === "today" ? (
             <TodayView
               date={date}
               entriesByDate={entriesByDate}
