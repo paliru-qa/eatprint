@@ -10,6 +10,12 @@
 // supporting simultaneous multi-device editing.
 export const config = { runtime: "edge" };
 
+// Edge Functions run in a V8 isolate, not Node.js — `process.env` works at
+// runtime (Vercel provides it there specifically for reading env vars), but
+// there's no ambient `process` type without @types/node. Rather than add a
+// dependency just for this, declare the one shape we actually use.
+declare const process: { env: Record<string, string | undefined> };
+
 // Accepts both crypto.randomUUID() ("8-4-4-4-12" hex with hyphens) and the
 // getRandomValues() hex-string fallback used when randomUUID isn't available.
 const ID_PATTERN = /^[0-9a-f-]{8,64}$/i;
@@ -22,8 +28,12 @@ function json(body: unknown, status: number): Response {
 }
 
 function upstashConfig(): { baseUrl: string; token: string } | null {
-  const baseUrl = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  // Vercel's Upstash Marketplace integration names these KV_REST_API_URL /
+  // KV_REST_API_TOKEN (a holdover from when this was branded "Vercel KV").
+  // Support both that name and the plain Upstash name, in case the
+  // integration or dashboard changes what it generates later.
+  const baseUrl = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!baseUrl || !token) return null;
   return { baseUrl, token };
 }
